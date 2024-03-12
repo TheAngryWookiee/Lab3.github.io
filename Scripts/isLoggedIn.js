@@ -8,3 +8,15 @@
     location.href = "contact-list.html";
     }
 })();
+
+function ensureLoggedIn(req, res, next) {
+    if(req.isLoggedIn()) {
+        return next();
+    } else {
+        res.redirect('../OldContent/login.html');
+    }
+}
+
+module.exports = {
+    ensureLoggedIn,
+}

@@ -6,6 +6,8 @@
         constructor() 
         {
             this.ActiveLink = "";
+
+            this.m_callbacks = [];
         }
 
         // Public Properties (getters and setters)
@@ -25,8 +27,14 @@
          * Adds a new route to the Routing Table
          *
          * @param {string} route
+         * @param {function} callback
          * @returns {void}
          */
+
+        AddCallBack(route, callback) {
+            this.m_callbacks.push({route, callback});
+        }
+
         Add(route) 
         {
             this.m_routingTable.push(route);
@@ -96,7 +104,8 @@ router.AddTable(["/",
                  "/projects", 
                  "/register", 
                  "/login", 
-                 "/edit"]);
+                 "/edit",
+                 "/task-list"]);
                 
 let route = location.pathname; // alias for location.pathname
 
@@ -108,5 +117,73 @@ else
 {
     router.ActiveLink = "404";
 }
+
+router.Add("/task-list")
+
+function ensureLoggedIn(req, res, next) {
+    if (isLoggedIn) {
+        return next();
+    } else {
+        res.redirect('./OldContent/login.html')
+    }
+}
+
+
+function toggleTaskListLink(){
+    const taskListLink = document.getElementById('taskListLink');
+
+    if (isLoggedIn || router.ActiveLink === "task-list") {
+        taskListLink.style.display = 'block';
+    } else {
+        taskListLink.style.display = 'none';
+    }
+}
+
+toggleTaskListLink();
+
+const navBar = document.querySelector('.navbar-nav');
+
+const taskListNavItem = document.createElement('li');
+taskListNavItem.id = 'taskListLink';
+taskListNavItem.className = 'nav-item';
+taskListNavItem.style.display = 'none';
+
+const taskListLink = document.createElement('a');
+taskListLink.className = 'nav-link';
+taskListLink.href = '/task-list';
+
+taskListLink.innerHTML = '<i class="fas fa-tasks"></i> Task List';
+
+taskListNavItem.appendChild(taskListLink);
+
+navBar.appendChild(taskListNavItem);
+
+function DisplayTaskList(){
+
+    const taskListContainer = document.getElementById('taskListContainer');
+
+    const tasks = [
+        {id: 1, text: 'Task 1: Make a Cake'},
+        {id: 2, text: 'Task 2: Run some Tests'},
+        {id: 3, text: 'Task 3: Declare the cake is a lie'}
+    ];
+
+    taskListContainer.innerHTML = '';
+
+    const ul = document.createElement('ul');
+    ul.className = 'list-group list-group-flush';
+
+    tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = '<span>${task.text</span>';
+        ul.appendChild(li);
+    });
+
+    taskListContainer.appendChild(ul);
+    
+}
+
+router.AddCallBack("/task-list", DisplayTaskList);
 
 
