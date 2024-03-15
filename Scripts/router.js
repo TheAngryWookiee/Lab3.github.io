@@ -6,7 +6,6 @@
         constructor() 
         {
             this.ActiveLink = "";
-
             this.m_callbacks = [];
         }
 
