@@ -332,7 +332,7 @@
           messageArea.removeAttr("class").hide();
 
           // redirect user to secure area - contact-list.html
-          location.href = "/task-list.html";
+          location.href = "/Lab3.github.io/";
         }
         else
         {
@@ -402,7 +402,7 @@
         });
        
         $(`<li class="nav-item">
-        <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
+        <a id="task-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Task List</a>
       </li>`).insertBefore("#loginListItem");
       }
       else
@@ -437,7 +437,7 @@
         case "projects": return displayProjects;
         case "services": return displayServices;
         case "contact": return displayContact;
-        case "contact-list": return displayContactList;
+        case "task-list": return displayTaskList;
         case "edit": return displayEdit;
         case "login": return displayLogin;
         case "register": return displayRegister;
@@ -484,7 +484,7 @@
      * This function is the Callback function for the TaskList
      *
      */
-    function DisplayTaskList()
+    function displayTaskList()
     {
         let messageArea = $("#messageArea");
         messageArea.hide();

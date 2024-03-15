@@ -3,10 +3,10 @@
 (function (core) {
     class Router {
         // constructors
-        constructor() 
-        {
-            this.ActiveLink = "";
+        constructor() {
+            this.m_activeLink = "";
             this.m_callbacks = [];
+            this.m_routingTable = [];
         }
 
         // Public Properties (getters and setters)
@@ -128,9 +128,8 @@ function ensureLoggedIn(req, res, next) {
 }
 
 
-function toggleTaskListLink(){
+function toggleTaskListLink() {
     const taskListLink = document.getElementById('taskListLink');
-
     if (isLoggedIn || router.ActiveLink === "task-list") {
         taskListLink.style.display = 'block';
     } else {
@@ -150,7 +149,6 @@ taskListNavItem.style.display = 'none';
 const taskListLink = document.createElement('a');
 taskListLink.className = 'nav-link';
 taskListLink.href = '/task-list';
-
 taskListLink.innerHTML = '<i class="fas fa-tasks"></i> Task List';
 
 taskListNavItem.appendChild(taskListLink);
